@@ -57,15 +57,12 @@ app.get('/', (req, res) => {
 });
 
 
-
-/* Create a new route
-Create a new menu route in server.js
-
-GET route to /menu
-res.render() a menu.ejs view (created next) */
+// EX (2) : Create a menue route 
 
 app.get('/menu', (req, res) => {
-  res.render('menu.ejs', { RESTAURANT });
+  res.render('menu.ejs', {RESTAURANT});
 });
+
+// 
 
 app.listen(3000);
