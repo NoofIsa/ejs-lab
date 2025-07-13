@@ -1,5 +1,6 @@
 const express = require('express');
 const app = express();
+app.set('view engine', 'ejs');
 
 const RESTAURANT = {
   name: 'The Green Byte Bistro',
@@ -7,7 +8,7 @@ const RESTAURANT = {
   address: '742 Evergreen Rd, Mapleview, OS 45502',
   phone: '555-321-9876',
   menu: [
-    { 
+    {
       id: 1,
       name: 'Quantum Quinoa Mushroom Burger',
       price: 13.00,
@@ -15,7 +16,7 @@ const RESTAURANT = {
       category: 'mains',
       details: 'A vegetarian burger made with a quinoa and mushroom patty, it will take you to another realm.'
     },
-    { 
+    {
       id: 2,
       name: 'Binary Berry Cheesecake',
       price: 10.11,
@@ -23,7 +24,7 @@ const RESTAURANT = {
       category: 'desserts',
       details: 'A creamy cheesecake bursting with flavor. A mix of berries in every byte.'
     },
-    { 
+    {
       id: 3,
       name: 'Recursive Rigatoni',
       price: 17.00,
@@ -31,7 +32,7 @@ const RESTAURANT = {
       category: 'mains',
       details: 'A classic rigatoni pasta dish, layered with rich tomato sauce and herbs. You\'ll keep coming back for more.'
     },
-    { 
+    {
       id: 4,
       name: 'Pumpkin Pi Squared',
       price: 3.14,
@@ -39,7 +40,7 @@ const RESTAURANT = {
       category: 'desserts',
       details: 'A delightful pumpkin dessert, squared and spiced to perfection.'
     },
-    { 
+    {
       id: 5,
       name: 'Fibonacci String Bean Fries',
       price: 11.23,
@@ -49,10 +50,10 @@ const RESTAURANT = {
     }
   ]
 }
-  // EX (1) : Modify the route and Send data to view
+// EX (1) : Modify the route and Send data to view
 app.get('/', (req, res) => {
   //res.send('Hello There!');
-  res.render('home.ejs',{ RESTAURANT });
+  res.render('home.ejs', { RESTAURANT });
 
 });
 
@@ -60,9 +61,24 @@ app.get('/', (req, res) => {
 // EX (2) : Create a menue route 
 
 app.get('/menu', (req, res) => {
-  res.render('menu.ejs', {RESTAURANT});
+  res.render('menu.ejs', { RESTAURANT });
 });
 
-// 
 
+// EX (3) : Create a category route
+
+app.get('/menu/:category', (req, res) => {
+  const category = req.params.category.toLowerCase(); // except tw letter case
+
+  // Filter only items that match the category
+  const menuItems = RESTAURANT.menu.filter(item => item.category === category);
+
+  // Send the filtered items to the view as `menuItems`
+  res.render('category', {
+    category,
+    menuItems
+  });
+});
+
+// start server
 app.listen(3000);
