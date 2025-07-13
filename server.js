@@ -49,12 +49,23 @@ const RESTAURANT = {
     }
   ]
 }
-
+  // EX (1) : Modify the route and Send data to view
 app.get('/', (req, res) => {
   //res.send('Hello There!');
   res.render('home.ejs',{ RESTAURANT });
 
 });
 
+
+
+/* Create a new route
+Create a new menu route in server.js
+
+GET route to /menu
+res.render() a menu.ejs view (created next) */
+
+app.get('/menu', (req, res) => {
+  res.render('menu.ejs', { RESTAURANT });
+});
 
 app.listen(3000);
